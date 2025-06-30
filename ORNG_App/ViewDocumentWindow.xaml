@@ -1,0 +1,39 @@
+﻿<Window x:Class="ORNG_App.ViewDocumentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ORNG_App"
+        mc:Ignorable="d"
+        Title="Просмотр документа" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Номер документа:" Grid.Row="0" FontWeight="Bold"/>
+        <TextBlock x:Name="txtDocNumber" Grid.Row="1" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Адрес:" Grid.Row="2" FontWeight="Bold"/>
+        <TextBlock x:Name="txtAddress" Grid.Row="3" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Номер счетчика:" Grid.Row="4" FontWeight="Bold"/>
+        <TextBlock x:Name="txtMeterNumber" Grid.Row="5" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Начальные показания:" Grid.Row="6" FontWeight="Bold"/>
+        <TextBlock x:Name="txtInitialReading" Grid.Row="7" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Дата активации:" Grid.Row="8" FontWeight="Bold"/>
+        <TextBlock x:Name="txtActivationDate" Grid.Row="9" Margin="0,0,0,20"/>
+
+        <Button x:Name="btnViewScan" Content="Просмотреть скан документа" Grid.Row="10" Height="30" Click="btnViewScan_Click"/>
+    </Grid>
+</Window>
