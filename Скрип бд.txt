@@ -1,0 +1,59 @@
+-- Создание базы данных
+CREATE DATABASE ORNG_DB;
+GO
+
+USE ORNG_DB;
+GO
+
+-- Таблица пользователей
+CREATE TABLE Users (
+    UserId INT PRIMARY KEY IDENTITY(1,1),
+    Username NVARCHAR(50) NOT NULL UNIQUE,
+    Password NVARCHAR(100) NOT NULL,
+    FullName NVARCHAR(100) NOT NULL,
+    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Specialist', 'User')),
+    Email NVARCHAR(100),
+    Phone NVARCHAR(20),
+    IsActive BIT DEFAULT 1
+);
+
+-- Таблица актов на пуск газа
+CREATE TABLE GasActivationDocuments (
+    DocumentId INT PRIMARY KEY IDENTITY(1,1),
+    DocumentNumber NVARCHAR(50) NOT NULL UNIQUE,
+    CreationDate DATETIME DEFAULT GETDATE(),
+    SpecialistId INT FOREIGN KEY REFERENCES Users(UserId),
+    CustomerId INT FOREIGN KEY REFERENCES Users(UserId),
+    Address NVARCHAR(200) NOT NULL,
+    MeterNumber NVARCHAR(50) NOT NULL,
+    InitialMeterReading DECIMAL(10, 2) NOT NULL,
+    ActivationDate DATETIME NOT NULL,
+    DocumentScan IMAGE,
+    IsApproved BIT DEFAULT 0,
+    ApprovalDate DATETIME NULL
+);
+
+-- Таблица уведомлений
+CREATE TABLE Notifications (
+    NotificationId INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT FOREIGN KEY REFERENCES Users(UserId),
+    DocumentId INT FOREIGN KEY REFERENCES GasActivationDocuments(DocumentId),
+    Message NVARCHAR(500) NOT NULL,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    IsRead BIT DEFAULT 0
+);
+
+-- Таблица платежей
+CREATE TABLE Payments (
+    PaymentId INT PRIMARY KEY IDENTITY(1,1),
+    DocumentId INT FOREIGN KEY REFERENCES GasActivationDocuments(DocumentId),
+    Amount DECIMAL(10, 2) NOT NULL,
+    PaymentDate DATETIME NOT NULL,
+    PaymentMethod NVARCHAR(50) NOT NULL,
+    ConfirmationNumber NVARCHAR(100)
+);
+
+-- Вставка начального администратора
+INSERT INTO Users (Username, Password, FullName, Role, Email, Phone)
+VALUES ('admin', 'admin123', 'Администратор системы', 'Admin', 'admin@orng.local', '+1234567890');
+GO
